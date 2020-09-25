@@ -10,10 +10,13 @@ cfg_udp! {
     /// A UDP socket
     ///
     /// UDP is "connectionless", unlike TCP. In tokio there are basically two main ways to use `UdpSocket`:
-    ///     - one to many: [`bind`](`UdpSocket::bind`) and use [`send_to`](`UdpSocket::send_to`) and `[`recv_from`](`UdpSocket::recv_from`) to communicate with many different addresses
-    ///     - one to one: [`connect`](`UdpSocket::connect`) and use [`send`](`UdpSocket::send`) and `[`recv`](`UdpSocket::recv`) only from the "connected" address
+    ///     - one to many: [`bind`](`UdpSocket::bind`) and use [`send_to`](`UdpSocket::send_to`)
+    /// and `[`recv_from`](`UdpSocket::recv_from`) to communicate with many different addresses
+    ///     - one to one: [`connect`](`UdpSocket::connect`) and use [`send`](`UdpSocket::send`)
+    /// and `[`recv`](`UdpSocket::recv`) only from the "connected" address
     ///
-    /// `UdpSocket` can also be [`split`](`UdpSocket::split`) in order to send and receive data concurrently, by moving the `SendHalf` or `RecvHalf` to a different task.
+    /// `UdpSocket` can also be used concurrently to `send_to` and `recv_from` in different tasks,
+    /// all that's required is that you `Arc<UdpSocket>` and clone a reference for each task.
     ///
     /// # One to many example (bind)
     ///
@@ -24,7 +27,7 @@ cfg_udp! {
     ///
     ///    #[tokio::main]
     ///    async fn main() -> io::Result<()> {
-    ///        let mut sock = UdpSocket::bind("0.0.0.0:8080".parse::<SocketAddr>().unwrap()).await?;
+    ///        let sock = UdpSocket::bind("0.0.0.0:8080".parse::<SocketAddr>().unwrap()).await?;
     ///        let mut buf = [0; 1024];
     ///        loop {
     ///            let (len, addr) = sock.recv_from(&mut buf).await?;
@@ -45,7 +48,7 @@ cfg_udp! {
     ///
     ///    #[tokio::main]
     ///    async fn main() -> io::Result<()> {
-    ///        let mut sock = UdpSocket::bind("0.0.0.0:8080".parse::<SocketAddr>().unwrap()).await?;
+    ///        let sock = UdpSocket::bind("0.0.0.0:8080".parse::<SocketAddr>().unwrap()).await?;
     ///
     ///        let remote_addr = "127.0.0.1:59611".parse::<SocketAddr>().unwrap();
     ///        sock.connect(remote_addr).await?;
