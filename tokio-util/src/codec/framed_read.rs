@@ -47,9 +47,8 @@ where
                 inner,
                 codec: decoder,
                 state: ReadFrame {
-                    eof: false,
-                    is_readable: false,
                     buffer: BytesMut::with_capacity(capacity),
+                    ..ReadFrame::default()
                 },
             },
         }
