@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1608865705553,
+  "lastUpdate": 1608865709325,
   "repoUrl": "https://github.com/leshow/tokio",
   "entries": {
     "sync_rwlock": [
@@ -299,6 +299,90 @@ window.BENCHMARK_DATA = {
             "name": "uncontented_unbounded",
             "value": 758648,
             "range": "± 79179",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "lnicola@users.noreply.github.com",
+            "name": "Laurențiu Nicola",
+            "username": "lnicola"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1eefbc250ad49d9086bdb2b8be4404bd445f63fb",
+          "message": "docs: remove stream feature from docs (#3335)",
+          "timestamp": "2020-12-24T23:17:18+09:00",
+          "tree_id": "f3657463c2d44548e4d71f8454ce672ffeb0b45f",
+          "url": "https://github.com/leshow/tokio/commit/1eefbc250ad49d9086bdb2b8be4404bd445f63fb"
+        },
+        "date": 1608865708542,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "contention_bounded",
+            "value": 7018146,
+            "range": "± 2949432",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "contention_bounded_full",
+            "value": 6933526,
+            "range": "± 2606952",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "contention_unbounded",
+            "value": 6915731,
+            "range": "± 2947965",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "create_100_000_medium",
+            "value": 686,
+            "range": "± 123",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "create_100_medium",
+            "value": 663,
+            "range": "± 35",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "create_1_medium",
+            "value": 682,
+            "range": "± 241",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "send_large",
+            "value": 83467,
+            "range": "± 5807",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "send_medium",
+            "value": 1403,
+            "range": "± 190",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "uncontented_bounded",
+            "value": 1132006,
+            "range": "± 43947",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "uncontented_unbounded",
+            "value": 826875,
+            "range": "± 35179",
             "unit": "ns/iter"
           }
         ]
