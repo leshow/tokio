@@ -6,6 +6,7 @@ use tokio::{net::UdpSocket, stream::Stream};
 
 use bytes::BytesMut;
 use std::{
+    borrow::Borrow,
     fmt,
     net::{Ipv4Addr, SocketAddr, SocketAddrV4},
     pin::Pin,
@@ -18,17 +19,20 @@ pin_project! {
     /// [`Stream`]: tokio::stream::Stream
     /// [`AsyncRead`]: tokio::udp::UdpSocket
     #[cfg_attr(docsrs, doc(all(feature = "codec", feature = "udp")))]
-    pub struct UdpFramedRead<C> {
+    pub struct UdpFramedRead<T, C> {
         #[pin]
-        inner: UdpFramedImpl<C, ReadFrame>,
+        inner: UdpFramedImpl<T, C, ReadFrame>,
     }
 }
 
-impl<C> UdpFramedRead<C> {
+impl<T, C> UdpFramedRead<T, C>
+where
+    T: Borrow<UdpSocket>,
+{
     /// Create a new `UdpFramed` backed by the given socket and codec.
     ///
     /// See struct level documentation for more details.
-    pub fn new(socket: UdpSocket, codec: C) -> UdpFramedRead<C> {
+    pub fn new(socket: T, codec: C) -> UdpFramedRead<T, C> {
         Self {
             inner: UdpFramedImpl {
                 codec,
@@ -52,19 +56,7 @@ impl<C> UdpFramedRead<C> {
     /// coming in as it may corrupt the stream of frames otherwise being worked
     /// with.
     pub fn get_ref(&self) -> &UdpSocket {
-        &self.inner.inner
-    }
-
-    /// Returns a mutable reference to the underlying I/O stream wrapped by
-    /// `UdpFramed`.
-    ///
-    /// # Note
-    ///
-    /// Care should be taken to not tamper with the underlying stream of data
-    /// coming in as it may corrupt the stream of frames otherwise being worked
-    /// with.
-    pub fn get_mut(&mut self) -> &mut UdpSocket {
-        &mut self.inner.inner
+        &self.inner.inner.borrow()
     }
 
     /// Returns a reference to the underlying codec wrapped by
@@ -94,15 +86,11 @@ impl<C> UdpFramedRead<C> {
     pub fn read_buffer_mut(&mut self) -> &mut BytesMut {
         &mut self.inner.state.buffer
     }
-
-    /// Consumes the `Framed`, returning its underlying I/O stream.
-    pub fn into_inner(self) -> UdpSocket {
-        self.inner.inner
-    }
 }
 
-impl<C> Stream for UdpFramedRead<C>
+impl<T, C> Stream for UdpFramedRead<T, C>
 where
+    T: Borrow<UdpSocket>,
     C: Decoder,
 {
     type Item = Result<(C::Item, SocketAddr), C::Error>;
@@ -112,8 +100,9 @@ where
     }
 }
 
-impl<C> fmt::Debug for UdpFramedRead<C>
+impl<T, C> fmt::Debug for UdpFramedRead<T, C>
 where
+    T: Borrow<UdpSocket>,
     C: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
