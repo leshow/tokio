@@ -19,17 +19,17 @@ pin_project! {
     /// [`Stream`]: tokio::stream::Stream
     /// [`AsyncRead`]: tokio::udp::UdpSocket
     #[cfg_attr(docsrs, doc(all(feature = "codec", feature = "udp")))]
-    pub struct UdpFramedRead<C> {
+    pub struct UdpFramedRecv<C> {
         #[pin]
         inner: UdpFramedImpl<C, ReadFrame>,
     }
 }
 
-impl<C> UdpFramedRead<C> {
+impl<C> UdpFramedRecv<C> {
     /// Create a new `UdpFramed` backed by the given socket and codec.
     ///
     /// See struct level documentation for more details.
-    pub fn new(socket: UdpSocket, codec: C) -> UdpFramedRead<C> {
+    pub fn new(socket: UdpSocket, codec: C) -> UdpFramedRecv<C> {
         Self {
             inner: UdpFramedImpl {
                 codec,
@@ -102,7 +102,7 @@ impl<C> UdpFramedRead<C> {
     }
 }
 
-impl<C> Stream for UdpFramedRead<C>
+impl<C> Stream for UdpFramedRecv<C>
 where
     C: Decoder,
 {
@@ -113,12 +113,12 @@ where
     }
 }
 
-impl<C> fmt::Debug for UdpFramedRead<C>
+impl<C> fmt::Debug for UdpFramedRecv<C>
 where
     C: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("UdpFramedRead")
+        f.debug_struct("UdpFramedRecv")
             .field("io", self.get_ref())
             .field("codec", self.codec())
             .field("current_addr", &self.inner.current_addr)

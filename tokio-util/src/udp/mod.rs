@@ -2,9 +2,9 @@
 
 mod frame;
 mod framed_impl;
-mod framed_read;
-mod framed_write;
+mod framed_recv;
+mod framed_send;
 
 pub use frame::UdpFramed;
-pub use framed_read::UdpFramedRead;
-pub use framed_write::UdpFramedWrite;
+pub use framed_recv::UdpFramedRecv;
+pub use framed_send::UdpFramedSend;

@@ -5,7 +5,7 @@ use tokio_stream::StreamExt;
 use tokio_util::udp::UdpFramed;
 use tokio_util::{
     codec::{Decoder, Encoder, LinesCodec},
-    udp::{UdpFramedRead, UdpFramedWrite},
+    udp::{UdpFramedRecv, UdpFramedSend},
 };
 
 use bytes::{BufMut, BytesMut};
@@ -113,8 +113,8 @@ async fn framed_read_write() -> std::io::Result<()> {
     let a_addr = a_soc.local_addr()?;
     let b_addr = b_soc.local_addr()?;
 
-    let mut a = UdpFramedWrite::new(a_soc, ByteCodec);
-    let mut b = UdpFramedRead::new(b_soc, LinesCodec::new());
+    let mut a = UdpFramedSend::new(a_soc, ByteCodec);
+    let mut b = UdpFramedRecv::new(b_soc, LinesCodec::new());
 
     let msg = b"1\r\n2\r\n3\r\n".to_vec();
     a.send((&msg, b_addr)).await?;
@@ -141,8 +141,8 @@ async fn framed_read_write_concurrent() -> std::io::Result<()> {
     let a_addr = a_soc.local_addr()?;
     let b_addr = b_soc.local_addr()?;
 
-    let mut a = UdpFramedWrite::new(a_soc, ByteCodec);
-    let mut b = UdpFramedRead::new(b_soc, LinesCodec::new());
+    let mut a = UdpFramedSend::new(a_soc, ByteCodec);
+    let mut b = UdpFramedRecv::new(b_soc, LinesCodec::new());
 
     tokio::join!(
         async move {

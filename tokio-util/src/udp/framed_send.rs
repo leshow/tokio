@@ -18,17 +18,17 @@ pin_project! {
     ///
     /// [`Sink`]: futures_sink::Sink
     #[cfg_attr(docsrs, doc(all(feature = "codec", feature = "udp")))]
-    pub struct UdpFramedWrite<C> {
+    pub struct UdpFramedSend<C> {
         #[pin]
         inner: UdpFramedImpl<C, WriteFrame>,
     }
 }
 
-impl<C> UdpFramedWrite<C> {
+impl<C> UdpFramedSend<C> {
     /// Create a new `UdpFramed` backed by the given socket and codec.
     ///
     /// See struct level documentation for more details.
-    pub fn new(socket: UdpSocket, codec: C) -> UdpFramedWrite<C> {
+    pub fn new(socket: UdpSocket, codec: C) -> UdpFramedSend<C> {
         Self {
             inner: UdpFramedImpl {
                 codec,
@@ -91,7 +91,7 @@ impl<C> UdpFramedWrite<C> {
 }
 
 // This impl just defers to the underlying FramedImpl
-impl<I, U> Sink<(I, SocketAddr)> for UdpFramedWrite<U>
+impl<I, U> Sink<(I, SocketAddr)> for UdpFramedSend<U>
 where
     U: Encoder<I>,
     U::Error: From<io::Error>,
@@ -115,12 +115,12 @@ where
     }
 }
 
-impl<C> fmt::Debug for UdpFramedWrite<C>
+impl<C> fmt::Debug for UdpFramedSend<C>
 where
     C: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("UdpFramedWrite")
+        f.debug_struct("UdpFramedSend")
             .field("io", self.get_ref())
             .field("codec", self.encoder())
             .field("buffer", &self.inner.state.buffer)
