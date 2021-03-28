@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1608865713704,
+  "lastUpdate": 1616956172295,
   "repoUrl": "https://github.com/leshow/tokio",
   "entries": {
     "sync_rwlock": [
@@ -151,6 +151,54 @@ window.BENCHMARK_DATA = {
             "name": "yield_many",
             "value": 19644480,
             "range": "± 2901310",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "46445660+CorinJG@users.noreply.github.com",
+            "name": "CorinJG",
+            "username": "CorinJG"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a80d6eee542847c9e8399f1c6a0d495fb3817a0",
+          "message": "sync: improve doc on blocking mutex (#3645)",
+          "timestamp": "2021-03-27T13:26:10+01:00",
+          "tree_id": "a0d10efb9b60d62a44902a624c6f3b851d1c8ddf",
+          "url": "https://github.com/leshow/tokio/commit/1a80d6eee542847c9e8399f1c6a0d495fb3817a0"
+        },
+        "date": 1616956171577,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "chained_spawn",
+            "value": 200217,
+            "range": "± 6288",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "ping_pong",
+            "value": 755638,
+            "range": "± 103507",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "spawn_many",
+            "value": 5160097,
+            "range": "± 941434",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "yield_many",
+            "value": 20926398,
+            "range": "± 3650169",
             "unit": "ns/iter"
           }
         ]
