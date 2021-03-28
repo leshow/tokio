@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1616956172295,
+  "lastUpdate": 1616956177849,
   "repoUrl": "https://github.com/leshow/tokio",
   "entries": {
     "sync_rwlock": [
@@ -53,6 +53,60 @@ window.BENCHMARK_DATA = {
             "name": "read_uncontended",
             "value": 493,
             "range": "± 9",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "46445660+CorinJG@users.noreply.github.com",
+            "name": "CorinJG",
+            "username": "CorinJG"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a80d6eee542847c9e8399f1c6a0d495fb3817a0",
+          "message": "sync: improve doc on blocking mutex (#3645)",
+          "timestamp": "2021-03-27T13:26:10+01:00",
+          "tree_id": "a0d10efb9b60d62a44902a624c6f3b851d1c8ddf",
+          "url": "https://github.com/leshow/tokio/commit/1a80d6eee542847c9e8399f1c6a0d495fb3817a0"
+        },
+        "date": 1616956176851,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "read_concurrent_contended",
+            "value": 969,
+            "range": "± 213",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "read_concurrent_contended_multi",
+            "value": 15577,
+            "range": "± 7323",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "read_concurrent_uncontended",
+            "value": 938,
+            "range": "± 205",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "read_concurrent_uncontended_multi",
+            "value": 15190,
+            "range": "± 5135",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "read_uncontended",
+            "value": 470,
+            "range": "± 93",
             "unit": "ns/iter"
           }
         ]
